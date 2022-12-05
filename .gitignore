@@ -1,0 +1,9 @@
+# NextFlow Artifacts
+.nextflow*
+work
+
+# Project-specific Garbage
+scratch
+
+# Random Garbage
+.DS_Store
