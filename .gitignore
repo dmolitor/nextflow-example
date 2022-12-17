@@ -4,6 +4,9 @@ work
 
 # Project-specific Garbage
 scratch
+src/*_files
+src/*.html
 
 # Random Garbage
 .DS_Store
+.Rproj.user

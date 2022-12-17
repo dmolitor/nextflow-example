@@ -1,0 +1,93 @@
+---
+title: "Predictors of Testing Positive for Diabetes"
+author: Daniel Molitor
+format:
+  html:
+    theme: darkly
+    embed-resources: false
+params:
+  data_path: ""
+  oos_error_path: ""
+  model_path: ""
+---
+
+```{r}
+#| echo: false
+#| label: Script Setup
+#| warning: false
+diabetes <- read.csv(params$data_path) |>
+      transform(diabetes = factor(diabetes, levels = c("neg", "pos")))
+    oos_error <- round(100*as.numeric(readLines(params$oos_error_path)), 2)
+    best_tree <- readRDS(params$model_path)
+```
+
+This analysis uses the [Pima Indians Diabetes dataset](http://math.furman.edu/~dcs/courses/math47/R/library/mlbench/html/PimaIndiansDiabetes.html)
+to determine which factors are important predictors of testing positive for
+diabetes.
+
+## Data Structure
+
+Let's get a quick understanding of the variables included in our dataset
+and how they relate to each other.
+```{r}
+#| label: Data Structure
+#| layout: [[100]]
+#| warning: false
+str(diabetes)
+
+plot(diabetes, col = "lightblue")
+```
+
+## Optimal Decision Tree Model
+
+The optimal (best hold-out accuracy across tuning grid) Decision Tree 
+model has the following hyper-parameters:
+```{r}
+#| label: Optimal Tree
+#| warning: false
+cat("Hold-Out Accuracy:", oos_error, "%\n")
+jsonlite::toJSON(best_tree$control, pretty = TRUE, auto_unbox = TRUE)
+```
+
+We can also plot the tree structure using `rpart.plot`.
+```{r}
+#| label: Tree Structure
+#| layout: [[100]]
+#| warning: false
+rpart.plot::rpart.plot(best_tree, roundint = FALSE)
+```
+
+## Variable Importance
+
+Finally, we can determine the most important predictors of a positive
+diabetes diagnosis, using the variable importance feature of our
+Decision Tree.
+```{r}
+#| label: Variable Importance
+#| layout: [[100]]
+#| warning: false
+var_importance <- transform(
+  data.frame(
+    "Feature" = names(best_tree$variable.importance),
+    "Importance" = best_tree$variable.importance
+  ),
+  Importance = Importance/sum(Importance)
+)
+
+ggplot2::ggplot(
+  var_importance,
+  ggplot2::aes(x = forcats::fct_reorder(Feature, Importance), y = Importance)
+) +
+  ggplot2::geom_bar(stat = "identity") +
+  ggplot2::labs(x = "Feature") +
+  ggplot2::theme_light() +
+  ggplot2::theme(
+    axis.title = ggplot2::element_text(face = "bold"),
+    panel.border = ggplot2::element_blank()
+  )
+```
+
+## Conclusion
+
+Unsurprisingly, glucose levels are by far the most important indicator of
+diabetes.
