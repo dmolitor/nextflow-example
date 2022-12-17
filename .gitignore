@@ -4,8 +4,8 @@ work
 
 # Project-specific Garbage
 scratch
-src/*_files
-src/*.html
+source/*_files
+source/*.html
 
 # Random Garbage
 .DS_Store

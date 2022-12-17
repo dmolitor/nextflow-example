@@ -3,7 +3,7 @@
  */
 params.data_dir = "$projectDir/data/"
 params.scratch_dir = "$projectDir/scratch/"
-params.src_dir = "$projectDir/src/"
+params.src_dir = "$projectDir/source/"
 
 /*
  * Prep modeling data
