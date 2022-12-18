@@ -2,7 +2,6 @@
  * Script parameters
  */
 params.data_dir = "$projectDir/data/"
-params.scratch_dir = "$projectDir/scratch/"
 params.src_dir = "$projectDir/source/"
 
 /*
