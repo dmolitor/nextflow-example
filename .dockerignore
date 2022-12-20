@@ -1,0 +1,12 @@
+# Github stuff
+.git/
+.gitignore
+
+# NextFlow stuff
+.nextflow*
+.nextflow/
+work/
+
+# Data stuff
+data/
+source/
