@@ -1,5 +1,6 @@
 # NextFlow Artifacts
-.nextflow*
+.nextflow.log*
+.nextflow/
 work
 
 # Project-specific Garbage

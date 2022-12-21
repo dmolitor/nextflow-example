@@ -34,4 +34,4 @@ RUN if [ $TARGETARCH = "arm64" ] ; \
 RUN Rscript -e "install.packages('remotes')" \
     && Rscript -e "lapply(strsplit(readLines('r-requirements.txt'), split = '=='), function(pkg) remotes::install_version(pkg[[1]], version = pkg[[2]]))"
 
-ENTRYPOINT [ "/usr/bin/bash" ]
+CMD [ "/usr/bin/bash" ]

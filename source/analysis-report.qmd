@@ -3,6 +3,8 @@ title: "Predictors of Testing Positive for Diabetes"
 author: Daniel Molitor
 format:
   html:
+    code-tools:
+      source: https://github.com/dmolitor/nextflow-example
     theme: darkly
     embed-resources: false
 params:
@@ -40,12 +42,11 @@ plot(diabetes, col = "lightblue")
 
 ## Optimal Decision Tree Model
 
-The optimal (best hold-out accuracy across tuning grid) Decision Tree 
-model has the following hyper-parameters:
+The optimal Decision Tree (hold-out set accuracy of 79.22%) model
+has the following hyper-parameters:
 ```{r}
 #| label: Optimal Tree
 #| warning: false
-cat("Hold-Out Accuracy:", oos_error, "%\n")
 jsonlite::toJSON(best_tree$control, pretty = TRUE, auto_unbox = TRUE)
 ```
 
