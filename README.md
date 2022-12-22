@@ -28,4 +28,4 @@ nextflow -c nextflow-gh.config run main.nf
 
 ## Github Actions
 The report is built and deployed via Github Actions, demonstrating a simple use-case of
-NextFlow x Github Actions. Check out the [generated report here](https://dmolitor.com/nextflow-example).
+NextFlow x Github Actions. Check out the [generated report here](https://dmolitor.com/nextflow-example)!
