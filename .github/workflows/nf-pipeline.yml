@@ -26,6 +26,8 @@ jobs:
           docker pull djmolitor/nextflow-example:latest
           sudo apt-get install tree
           tree ./
+          tree ../
+          tree ../..
           nextflow run main.nf
           mkdir _site
           cp -R source/analysis-report.html source/analysis-report_files _site
