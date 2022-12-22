@@ -1,0 +1,29 @@
+name: "NF Pipeline"
+on:
+  push:
+    branches:
+      - main
+
+concurrency: 
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  pipeline:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      
+      - name: Setup NextFlow
+        uses: nf-core/setup-nextflow@v1.2.0
+      
+      - name: Setup Docker
+        uses: docker-practice/actions-setup-docker@master
+      
+      - name: Test Docker
+        run: |
+          set -x
+          docker --version
+          docker pull djmolitor/nextflow-example:latest
+          docker run --rm djmolitor/nextflow-example Rscript -e "library(rpart); library(rpart.plot); cat('Packages available\n')"
