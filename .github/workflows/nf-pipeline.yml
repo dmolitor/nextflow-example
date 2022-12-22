@@ -27,6 +27,7 @@ jobs:
           nextflow -c nextflow-gh.config run main.nf
           mkdir _site
           cp -R source/analysis-report.html source/analysis-report_files _site
+          mv _site/analysis-report.html _site/index.html
           echo "" >> _site/.nojekyll
       
       - name: Install rsync
