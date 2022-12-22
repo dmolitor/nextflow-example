@@ -21,9 +21,20 @@ jobs:
       - name: Setup Docker
         uses: docker-practice/actions-setup-docker@master
       
-      - name: Test Docker
+      - name: Execute NF Pipeline
         run: |
           set -x
-          docker --version
           docker pull djmolitor/nextflow-example:latest
-          docker run --rm djmolitor/nextflow-example Rscript -e "library(rpart); library(rpart.plot); cat('Packages available\n')"
+          nextflow run main.nf
+          mkdir _site
+          cp -R source/analysis-report.html source/analysis-report_files _site
+          echo "" >> _site/.nojekyll
+      
+      - name: Install rsync
+        run: |
+          sudo apt-get update && sudo apt-get install -y rsync
+      
+      - name: Deploy
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: _site
